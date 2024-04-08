@@ -6,6 +6,7 @@ const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBit
 
 const list=['yo','word','elephant'];
 const b=list.length+1;
+var a=null;
 
 var repeat = function(str, count) {
     var array = [];
@@ -26,8 +27,17 @@ client.on('interactionCreate',(interaction)=>{
     // function
     if(interaction.commandName==='ping'){
         a=list[Math.floor(Math.random()*b)];
-     interaction.reply(`Guess the word: \n\`${repeat('_ ',a.length)}\``)}
+     interaction.reply(`Guess the word: \n\`${repeat('_ ',a.length)}\``);x=1;}  
 })
 
+client.on('interactionCreate',(interact)=>{
+    if( interact.commandName==='test'){
+        if(a){
+            interact.reply('working');
+        }else{
+            interact.reply('do /ping first');
+        }
+    }
+})
 
 client.login('MTIyNTUwNzUyMTEzMzgwNTU5OA.GekSAD.Ndz7HT1ESqI7HajMep4fgRltBHvGxpFmrebxUI');

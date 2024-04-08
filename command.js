@@ -4,7 +4,17 @@ const commands = [
     {
       name: 'ping',
       description: 'Replies with Pong!',
+    },{
+      name:'test',
+      description:'testingg'
     },
+    {
+      name:'g',
+      description:' guess letter'
+    },{
+      name:'gw',
+      description:' guess word'
+    }
   ];
 
   const rest = new REST({ version: '10' }).setToken('MTIyNTUwNzUyMTEzMzgwNTU5OA.GekSAD.Ndz7HT1ESqI7HajMep4fgRltBHvGxpFmrebxUI');
