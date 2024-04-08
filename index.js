@@ -1,5 +1,6 @@
 // import { Client, GatewayIntentBits } from 'discord.js';
-const { Client, GatewayIntentBits }=require('discord.js');
+const { Client,GatewayIntentBits }=require('discord.js');
+require("dotenv").config();
 // const GatewayIntentBits=require('discord.js');
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent] });
@@ -15,29 +16,30 @@ var repeat = function(str, count) {
     return array.join('');
 }
 
-client.on('messageCreate', (message)=>{
-    console.log(message.content);
+client.on('messageCreate',async (message)=>{
     if(message.author.bot) return;
-    message.reply({
+    await message.reply({
         content:'yo from bot '
     })
 })
 
-client.on('interactionCreate',(interaction)=>{
-    // function
-    if(interaction.commandName==='ping'){
-        a=list[Math.floor(Math.random()*b)];
-     interaction.reply(`Guess the word: \n\`${repeat('_ ',a.length)}\``);x=1;}  
+client.on('interactionCreate',async (interaction)=>{
+     if(interaction.isCommand()){
+        if(interaction.commandName==='start'){
+           a=list[Math.floor(Math.random()*b)];
+         await interaction.reply(`Guess the word: \n\`${repeat('_ ',a.length)}\``)}
+     }  
 })
 
 client.on('interactionCreate',(interact)=>{
-    if( interact.commandName==='test'){
+    if( interact.commandName==='g'){
         if(a){
-            interact.reply('working');
+            const text=interact.options.getString("letter");
+            console.log(interact);
         }else{
-            interact.reply('do /ping first');
+            interact.reply('do /start first');
         }
     }
 })
 
-client.login('MTIyNTUwNzUyMTEzMzgwNTU5OA.GekSAD.Ndz7HT1ESqI7HajMep4fgRltBHvGxpFmrebxUI');
+client.login(process.env.TOKEN);

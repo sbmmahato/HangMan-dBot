@@ -1,29 +1,33 @@
-const { REST, Routes } = require('discord.js');
+const { REST, Routes, SlashCommandBuilder } = require('discord.js');
+require("dotenv").config();
+
+const token=process.env.TOKEN;
+const clientid=process.env.CLIENT_ID;
 
 const commands = [
-    {
-      name: 'ping',
-      description: 'Replies with Pong!',
-    },{
-      name:'test',
-      description:'testingg'
-    },
-    {
-      name:'g',
-      description:' guess letter'
-    },{
-      name:'gw',
-      description:' guess word'
-    }
+    new SlashCommandBuilder()
+    .setName("start")
+    .setDescription(" start the game"),
+
+    new SlashCommandBuilder()
+    .setName("g")
+    .setDescription(" guess a letter")
+    .addStringOption(option=>{
+      return option
+      .setName("letter")
+      .setDescription("type a letter")
+      .setMinLength(1)
+      .setMaxLength(1)
+    })
   ];
 
-  const rest = new REST({ version: '10' }).setToken('MTIyNTUwNzUyMTEzMzgwNTU5OA.GekSAD.Ndz7HT1ESqI7HajMep4fgRltBHvGxpFmrebxUI');
+  const rest = new REST({ version: '10' }).setToken(token);
 
   (async ()=>{
     try {
         console.log('Started refreshing application (/) commands.');
       
-        await rest.put(Routes.applicationCommands('1225507521133805598'), { body: commands });
+        await rest.put(Routes.applicationCommands(clientid), { body: commands });
       
         console.log('Successfully reloaded application (/) commands.');
       } catch (error) {
