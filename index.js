@@ -22,12 +22,18 @@ client.on('messageCreate',async (message)=>{
         content:'yo from bot '
     })
 })
-
+let n=[];
 client.on('interactionCreate',async (interaction)=>{
+    //  n=[];
      if(interaction.isCommand()){
         if(interaction.commandName==='start'){
+            n=[];
            a=list[Math.floor(Math.random()*b)];
-         await interaction.reply(`Guess the word: \n\`${repeat('_ ',a.length)}\``)}
+         await interaction.reply(`Guess the word: \n\`${repeat('_ ',a.length)}\``)
+        for(let i=0;i<a.length;i++){
+            n.push('_');
+        }
+        }
      }  
 })
 
@@ -35,7 +41,13 @@ client.on('interactionCreate',(interact)=>{
     if( interact.commandName==='g'){
         if(a){
             const text=interact.options.getString("letter");
-            console.log(interact);
+            
+            for(let i=0;i<a.length;i++){
+                if(a[i]===text){
+                    n[i]= text;
+                }
+            }
+            interact.reply(`\`${n.join(' ')}\``);
         }else{
             interact.reply('do /start first');
         }
