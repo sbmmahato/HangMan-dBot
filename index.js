@@ -22,12 +22,12 @@ client.on('messageCreate',async (message)=>{
         content:'yo from bot '
     })
 })
-let n=[];
+let n=[], count=0;
 client.on('interactionCreate',async (interaction)=>{
     //  n=[];
      if(interaction.isCommand()){
         if(interaction.commandName==='start'){
-            n=[];
+            n=[]; count=7;
            a=list[Math.floor(Math.random()*b)];
          await interaction.reply(`Guess the word: \n\`${repeat('_ ',a.length)}\``)
         for(let i=0;i<a.length;i++){
@@ -37,19 +37,24 @@ client.on('interactionCreate',async (interaction)=>{
      }  
 })
 
-client.on('interactionCreate',(interact)=>{
+client.on('interactionCreate',async (interact)=>{
     if( interact.commandName==='g'){
         if(a){
-            const text=interact.options.getString("letter");
-            
+            const text=await interact.options.getString("letter");
+            var z=0;
             for(let i=0;i<a.length;i++){
                 if(a[i]===text){
-                    n[i]= text;
+                    n[i]= text;z=1;
                 }
             }
-            interact.reply(`\`${n.join(' ')}\``);
+            // interact.reply(`\`${n.join(' ')}\``);
+            if(z===1){await interact.reply(`\`${n.join(' ')}\``)}else{
+                console.log(z);
+                count--;
+                await interact.reply(`'${text}' does not exist in the word.\nYou have ${count} chances left.\n\`${n.join(' ')}\``)
+            }
         }else{
-            interact.reply('do /start first');
+            await interact.reply('do /start first');
         }
     }
 })
