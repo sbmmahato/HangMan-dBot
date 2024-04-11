@@ -36,7 +36,7 @@ client.on('interactionCreate',async (interaction)=>{
     //  n=[];
      if(interaction.isCommand()){
         if(interaction.commandName==='start'){
-            n=[]; count=8;
+            n=[]; count=7;
            a=list[Math.floor(Math.random()*b)];
             // let a = await generateWord();
             let c=a.length ;
