@@ -5,7 +5,7 @@ require("dotenv").config();
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent] });
 
-const list=['dog',,'lion','elephant','cheetah','tortoise','rabbit','albatross','dolphin','pigeon','ostrich','whale'];
+const list=[{w:'dog',hint:'animal'},{w:'lion',hint:'animal'},{w:'elephant',hint:'animal'},{w:'cheetah',hint:'animal'},{w:'tortoise',hint:'animal'},{w:'rabbit',hint:'animal'},{w:'albatross',hint:'animal'},{w:'dolphin',hint:'animal'},{w:'pigeon',hint:'animal'},{w:'ostrich',hint:'animal'}];
 const b=list.length;
 var a=null;
 
@@ -37,11 +37,12 @@ client.on('interactionCreate',async (interaction)=>{
      if(interaction.isCommand()){
         if(interaction.commandName==='start'){
             n=[]; count=7;
-           a=list[Math.floor(Math.random()*b)];
+           a1=list[Math.floor(Math.random()*b)];
+           a=a1.w; h=a1.hint;
             // let a = await generateWord();
             let c=a.length ;
             // let c = await countWord(a);
-         await interaction.reply({content:`Guess the word: \n\`${repeat('_ ',c)}\``})
+         await interaction.reply({content:`Guess the word:\nHint: ${h} \n\`${repeat('_ ',c)}\``})
         for(let i=0;i<a.length;i++){
             n.push('_');
         }
