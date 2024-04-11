@@ -5,7 +5,7 @@ require("dotenv").config();
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent] });
 
-const list=['dog'];
+const list=['dog',,'lion','elephant','cheetah','tortoise','rabbit','albatross','dolphin','pigeon','ostrich','whale'];
 const b=list.length;
 var a=null;
 
