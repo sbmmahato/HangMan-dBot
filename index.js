@@ -5,7 +5,7 @@ require("dotenv").config();
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent] });
 
-const list=['yo','word','elephant'];
+const list=['dog'];
 const b=list.length;
 var a=null;
 
@@ -30,12 +30,7 @@ var repeat = function(str, count) {
 //     })
 // }
 
-client.on('messageCreate',async (message)=>{
-    if(message.author.bot) return;
-    await message.reply({
-        content:'yo from bot '
-    })
-})
+
 let n=[], count=0;
 client.on('interactionCreate',async (interaction)=>{
     //  n=[];
@@ -57,8 +52,11 @@ client.on('interactionCreate',async (interaction)=>{
 client.on('interactionCreate',async (interact)=>{
     if( interact.commandName==='g'){
         if(a){
-            let length=a.length;
-            const text=await interact.options.getString("letter");
+            let length=a.length;var text=null;
+            if(interact.options.getString("letter")){
+                text=await interact.options.getString("letter").toLowerCase();
+            }
+            
             var z=0;
             for(let i=0;i<a.length;i++){
                 if(a[i]===text){
@@ -69,8 +67,13 @@ client.on('interactionCreate',async (interact)=>{
             if(z===1 && count!==0){await interact.reply({content:`\`${n.join(' ')}\``})
                 if(!n.includes('_')){await interact.followUp({content:'Congrats! You found the word!\nUse command \`/start\` to play again'})}
             }else if(z===0 && count!==0){
-                count--;
-                await interact.reply({content:`'${text}' does not exist in the word.\nYou have ${count} chances left.\n\`${n.join(' ')}\``})
+        
+                if(text){count--;
+                    await interact.reply({content:`'${text}' does not exist in the word.\nYou have ${count} chances left.\n\`${n.join(' ')}\``})
+                }else{
+                    await interact.reply(`give an input`)
+                }
+                
             }
             if(count===0){await interact.reply({content:`You used up all your chances. Better Luck next time!\nUse command \`/start\` to play again`})}
         }else{
@@ -81,14 +84,21 @@ client.on('interactionCreate',async (interact)=>{
 
 client.on('interactionCreate',async (interact)=>{
     if(interact.isCommand()){
-        if(interact.commandName==='gw'){
-            let word=await interact.options.getString("word");
-            if(word===a){
-                await interact.reply({content:`Congrats! You guessed it right!\nUse command \`/start\` to play again.`});
-            }else{
-                count--;
-                await interact.reply({content:`You guessed it wrong\nYou have ${count} chances left.`});
+        if(interact.commandName==='gw'){var word=null;
+            if(interact.options.getString("word")){
+                word=await interact.options.getString("word").toLowerCase();
             }
+            if(word){
+                if(word===a){
+                    await interact.reply({content:`Congrats! You guessed it right!\nUse command \`/start\` to play again.`});
+                }else{
+                    count--;
+                    await interact.reply({content:`You guessed it wrong\nYou have ${count} chances left.\n\`${n.join(' ')}\``});
+                }
+            }else{
+                interact.reply(`Give an input`);
+            }
+           
         }
     }
 })
