@@ -46,7 +46,7 @@ client.on('interactionCreate',async (interaction)=>{
             // let a = await generateWord();
             let c=a.length ;
             // let c = await countWord(a);
-         await interaction.reply(`Guess the word: \n\`${repeat('_ ',c)}\``)
+         await interaction.reply({content:`Guess the word: \n\`${repeat('_ ',c)}\``})
         for(let i=0;i<a.length;i++){
             n.push('_');
         }
@@ -66,13 +66,29 @@ client.on('interactionCreate',async (interact)=>{
                 }
             }
             // interact.reply(`\`${n.join(' ')}\``);
-            if(z===1 && count!==0){await interact.reply(`\`${n.join(' ')}\``)}else if(z===0 && count!==0){
+            if(z===1 && count!==0){await interact.reply({content:`\`${n.join(' ')}\``})
+                if(!n.includes('_')){await interact.followUp({content:'Congrats! You found the word!\nUse command \`/start\` to play again'})}
+            }else if(z===0 && count!==0){
                 count--;
-                await interact.reply(`'${text}' does not exist in the word.\nYou have ${count} chances left.\n\`${n.join(' ')}\``)
+                await interact.reply({content:`'${text}' does not exist in the word.\nYou have ${count} chances left.\n\`${n.join(' ')}\``})
             }
-            if(count===0){await interact.reply(`You used up all your chances. Better Luck next time!`)}
+            if(count===0){await interact.reply({content:`You used up all your chances. Better Luck next time!\nUse command \`/start\` to play again`})}
         }else{
-            await interact.reply('do /start first');
+            await interact.reply({content:'do /start first'});
+        }
+    }
+})
+
+client.on('interactionCreate',async (interact)=>{
+    if(interact.isCommand()){
+        if(interact.commandName==='gw'){
+            let word=await interact.options.getString("word");
+            if(word===a){
+                await interact.reply({content:`Congrats! You guessed it right!\nUse command \`/start\` to play again.`});
+            }else{
+                count--;
+                await interact.reply({content:`You guessed it wrong\nYou have ${count} chances left.`});
+            }
         }
     }
 })

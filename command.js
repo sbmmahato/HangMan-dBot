@@ -18,6 +18,15 @@ const commands = [
       .setDescription("type a letter")
       .setMinLength(1)
       .setMaxLength(1)
+    }),
+
+    new SlashCommandBuilder()
+    .setName("gw")
+    .setDescription(" guess the word")
+    .addStringOption(option=>{
+      return option
+      .setName("word")
+      .setDescription("type a word")
     })
   ];
 
